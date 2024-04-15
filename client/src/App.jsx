@@ -23,6 +23,7 @@ function App() {
 
   const onSubmit = async (e) => {
     e.preventDefault();
+    setPredictedClass(null)
     try {
       setLoading(true)
       console.log(file)

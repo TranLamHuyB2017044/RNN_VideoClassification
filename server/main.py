@@ -15,9 +15,7 @@ CORS(app)
 
 
 def get_frames(file_path):
-    # Số lượng ảnh mỗi file video
     _images_per_file = 20
-    # Kích thước ảnh
     img_size = 224
     
     images = []
@@ -31,7 +29,6 @@ def get_frames(file_path):
         res = cv2.resize(rgb_img, dsize=(img_size, img_size), interpolation=cv2.INTER_CUBIC)
         images.append(res)
 
-        # Đọc frame tiếp theo
         success, image = vidcap.read()
         count += 1
 
@@ -68,7 +65,6 @@ def get_transfer_values(file_name):
 def classify_video(video_file, model):
     class_names = {0: 'shoot', 1: 'heading', 2: 'keeper'}
 
-    # Kiểm tra định dạng của video
     if not (video_file.filename.endswith('.mp4') or video_file.filename.endswith('.avi')):
         print("Định dạng video không hợp lệ. Chỉ chấp nhận định dạng .mp4 hoặc .avi.")
         return
@@ -76,20 +72,15 @@ def classify_video(video_file, model):
     video_path = video_file.filename
     video_file.save(video_path)
 
-    # Trích xuất transfer values của video
     video_transfer_values = get_transfer_values(video_path)
 
-    # Chuyển đổi transfer values
     reshaped_transfer_values = video_transfer_values.reshape(1, 20, 4096)
 
-    # Dự đoán nhãn của video
     predictions = model.predict(reshaped_transfer_values)
     predicted_class_index = np.argmax(predictions)
 
-    # Lấy tên lớp tương ứng với chỉ số dự đoán từ từ điển
     predicted_class = class_names.get(predicted_class_index, "Unknown")
 
-    # In ra kết quả dự đoán
     return predicted_class
 
 
