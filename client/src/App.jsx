@@ -70,7 +70,7 @@ function App() {
             </label>
             <input type="file" id="video" className="hidden " onChange={handlePreviewVideo} />
           </div>
-          {previewVideo && <button type="submit" className="px-16 py-3 rounded-md text-white border-[1px] bg-[dodgerblue] hover:bg-indigo-400 duration-300 to mt-5">Predict</button>}
+          {previewVideo && <button type="submit" onClick={() => setPredictedClass(null)} className="px-16 py-3 rounded-md text-white border-[1px] bg-[dodgerblue] hover:bg-indigo-400 duration-300 to mt-5">Predict</button>}
         </form>}
         {predictedClass !==null && <div className="mt-4 flex">Video belong to class: <p className="text-red-500 ml-1">{predictedClass}</p></div>}
     </div>
